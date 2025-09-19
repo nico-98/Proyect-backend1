@@ -5,6 +5,10 @@ import path from 'path';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -28,9 +32,6 @@ const PORT = 8080;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
 
 // MongoDB
-mongoose.connect('mongodb://nikolasplana_db_user:JtocF6rwqMfNX4l1@cluster0.mongodb.net/ecommerce?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB Atlas connected'))
-.catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Atlas connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
